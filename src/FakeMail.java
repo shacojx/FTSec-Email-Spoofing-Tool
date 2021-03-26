@@ -43,6 +43,7 @@ public class FakeMail extends javax.swing.JFrame implements Runnable {
     String patch_file = "";
     String file_to = "";
     ConfigForm cff = new ConfigForm(this, true);
+
     public void sendmail() {
         ArrayList<String> list_to = null;
         BufferedReader br = null;
@@ -58,6 +59,13 @@ public class FakeMail extends javax.swing.JFrame implements Runnable {
         content = this.content.getText().trim();
         file_name = this.file_name.getText().trim();
         String name_sender = this.name_sender.getText().trim();
+        String finalSubject = null;
+        try {
+            byte plantext_s[] = subject.getBytes("UTF-8");
+            finalSubject = new String(plantext_s, "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            JOptionPane.showMessageDialog(this, "Không thể encode UTF-8");
+        }
         //--------end get content--------   
         //---------- read file mail to -----------
         if (file_to.equals("")) {
@@ -93,8 +101,7 @@ public class FakeMail extends javax.swing.JFrame implements Runnable {
                 JOptionPane.showMessageDialog(this, "Không thể encode UTF-8");
             }
             //------------ user pass SMTP2GO -------------
-            
-            
+
             //--------------- end user pass SMTP2GO -------
             //------- set option smtp to sending mail --------
             Properties props = new Properties();
@@ -132,7 +139,7 @@ public class FakeMail extends javax.swing.JFrame implements Runnable {
                 message.setFrom(new InternetAddress(from_mail, name_sender));
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(list_to.get(i)));
-                message.setSubject(subject);
+                message.setSubject(finalSubject);
                 message.setContent(mp);
                 Transport.send(message);
                 //------write log----------
@@ -446,7 +453,7 @@ public class FakeMail extends javax.swing.JFrame implements Runnable {
     private void configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configActionPerformed
         // TODO add your handling code here:
         cff.setVisible(true);
-        
+
     }//GEN-LAST:event_configActionPerformed
 
     /**
