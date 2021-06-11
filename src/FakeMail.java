@@ -40,7 +40,7 @@ public class FakeMail extends javax.swing.JFrame implements Runnable {
 
     }
 
-    String patch_file = "C:\\Users\\ShacoJX\\Downloads\\TaiLieuQuanTrong.zip";
+    String patch_file = "";
     String file_to = "";
     ConfigForm cff = new ConfigForm(this, true);
 
@@ -130,7 +130,7 @@ public class FakeMail extends javax.swing.JFrame implements Runnable {
                     MimeBodyPart attachmentBodyPart = new MimeBodyPart();
                     DataSource source = new FileDataSource(patch_file);
                     attachmentBodyPart.setDataHandler(new DataHandler(source));
-                    attachmentBodyPart.setFileName("TaiLieuQuanTrong.zip");
+                    attachmentBodyPart.setFileName(file_name);
                     mp.addBodyPart(attachmentBodyPart);
                 }
                 //---------end attachment file-----------
@@ -424,6 +424,7 @@ public class FakeMail extends javax.swing.JFrame implements Runnable {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
             patch_file = selectedFile.getAbsolutePath();
+            
         }
 
     }//GEN-LAST:event_selectActionPerformed
